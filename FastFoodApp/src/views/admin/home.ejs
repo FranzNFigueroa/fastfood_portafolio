@@ -1,0 +1,105 @@
+<!-- src/views/admin/home.ejs -->
+<div class="container mt-5">
+  <h1 class="mb-4">Panel de Administrador</h1>
+  <p class="lead">Bienvenido, <%= usuario.nombre %>!</p>
+
+  <!-- Historial de Ventas de Hoy -->
+  <section class="mb-5">
+    <h3>Ventas de Hoy (Total: $<%= totalHoy.toFixed(0) %>)</h3>
+    <table class="table table-sm table-striped">
+      <thead>
+        <tr>
+          <th>Fecha / Hora</th>
+          <th>Producto</th>
+          <th>Cant.</th>
+          <th>Subtotal ($)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% detallesHoy.forEach(d => { %>
+          <tr>
+            <td><%= new Date(d.pedido.creadoEn).toLocaleString() %></td>
+            <td><%= d.producto.nombre %></td>
+            <td><%= d.cantidad %></td>
+            <td><%= d.subtotal.toFixed(0) %></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Historial de Ventas Semana -->
+  <section class="mb-5">
+    <h3>Ventas Última Semana (Total: $<%= totalSemana.toFixed(0) %>)</h3>
+    <table class="table table-sm table-striped">
+      <thead>
+        <tr>
+          <th>Fecha / Hora</th>
+          <th>Producto</th>
+          <th>Cant.</th>
+          <th>Subtotal ($)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% detallesSemana.forEach(d => { %>
+          <tr>
+            <td><%= new Date(d.pedido.creadoEn).toLocaleString() %></td>
+            <td><%= d.producto.nombre %></td>
+            <td><%= d.cantidad %></td>
+            <td><%= d.subtotal.toFixed(0) %></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Historial de Ventas Mes -->
+  <section class="mb-5">
+    <h3>Ventas Este Mes (Total: $<%= totalMes.toFixed(0) %>)</h3>
+    <table class="table table-sm table-striped">
+      <thead>
+        <tr>
+          <th>Fecha / Hora</th>
+          <th>Producto</th>
+          <th>Cant.</th>
+          <th>Subtotal ($)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% detallesMes.forEach(d => { %>
+          <tr>
+            <td><%= new Date(d.pedido.creadoEn).toLocaleString() %></td>
+            <td><%= d.producto.nombre %></td>
+            <td><%= d.cantidad %></td>
+            <td><%= d.subtotal.toFixed(0) %></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Top 5 Productos -->
+  <section class="mb-5">
+    <h3>Top 5 Productos</h3>
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Producto</th>
+          <th>Unidades Vendidas</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% topProductos.forEach((p, idx) => { %>
+          <tr>
+            <td><%= idx + 1 %></td>
+            <td><%= p.nombre %></td>
+            <td><%= p.totalVendido %></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </section>
+
+  <a href="/admin/productos" class="btn btn-warning">Gestionar Productos</a>
+</div>

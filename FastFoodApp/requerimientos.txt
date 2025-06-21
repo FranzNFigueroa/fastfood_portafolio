@@ -1,0 +1,37 @@
+Admin 
+Duoc1234
+admin@fastfood.cl
+
+Cliente
+fran.figueroaj@duocuc.cl
+Perro1234
+
+
+
+
+
+https://www.mercadopago.cl/developers/es/docs#online-payments
+
+Vendedor
+vendedor@fastfood.cl
+Duoc1234
+
+pay pal, registrarse, facilitan ambiente de prueba 
+otra forma sdk entorno de desarrollo .
+
+crear dashboard para admin
+ventas en efectivo y con tarjeta para cuadratura de caja 
+ideas
+y ventas mensuales y semanales 
+mensaje al coreo para cliente que la compra esta exitosa con detalle y valor 
+stock de los prudctos marcar con rojo al quedar poco, crear una funcion que avise cuando queden menos de 10 admin 
+vendedor dashboard ventas diarias para cuadrar cajas 
+ver la posibilidad de recuperar contrasena 
+
+presentacion frente al comite:
+codigo de vestimenta, formal o semiformal. 
+15 min por presentacion, 30 min max. 
+se puede dividir en dos grupos
+
+sabado 5 de julio presentacion 
+sabado 28 3ra entrega

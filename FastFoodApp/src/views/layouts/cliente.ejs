@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>FastFood</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg 
+      <%= !usuario
+            ? 'navbar-light bg-light'
+            : (usuario.rol === 'CLIENTE'
+                ? 'navbar-dark bg-dark'
+                : 'navbar-dark bg-secondary')
+      %>">
+    <div class="container-fluid">
+      <a class="navbar-brand" 
+         href="<%= !usuario
+                   ? '/'
+                   : (usuario.rol === 'CLIENTE'
+                       ? '/productos'
+                       : (usuario.rol === 'VENDEDOR'
+                           ? '/vendedor'
+                           : '/admin')) %>">
+        FastFood
+      </a>
+      <button class="navbar-toggler" type="button" 
+              data-bs-toggle="collapse" data-bs-target="#navbarNav" 
+              aria-controls="navbarNav" aria-expanded="false">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto align-items-center">
+
+          <% if (!usuario) { %>
+            <!-- Público -->
+            <li class="nav-item">
+              <button class="btn btn-outline-primary me-2" 
+                      data-bs-toggle="modal" 
+                      data-bs-target="#loginModal">
+                Iniciar sesión
+              </button>
+            </li>
+            <li class="nav-item">
+              <button class="btn btn-outline-success" 
+                      data-bs-toggle="modal" 
+                      data-bs-target="#registerModal">
+                Registrarse
+              </button>
+            </li>
+
+          <% } else { %>
+            <!-- Cliente -->
+            <% if (usuario.rol === 'CLIENTE') { %>
+              <li class="nav-item">
+                <a class="nav-link" href="/productos">Ver Productos</a>
+              </li>
+
+            <!-- Vendedor -->
+            <% } else if (usuario.rol === 'VENDEDOR') { %>
+              <li class="nav-item">
+                <a class="nav-link" href="/vendedor">Panel Vendedor</a>
+              </li>
+
+            <!-- Administrador -->
+            <% } else if (usuario.rol === 'ADMIN') { %>
+              <li class="nav-item">
+                <a class="nav-link" href="/admin">Dashboard Admin</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/admin/productos">Productos</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/admin/productos/nuevo">Agregar Producto</a>
+              </li>
+            <% } %>
+
+            <!-- Cerrar sesión y saludo -->
+            <li class="nav-item">
+              <form action="/logout" method="POST" class="d-inline">
+                <button type="submit" class="btn btn-link nav-link">Cerrar sesión</button>
+              </form>
+            </li>
+            <li class="nav-item">
+              <span class="nav-link disabled">Hola, <%= usuario.nombre %></span>
+            </li>
+          <% } %>
+
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container mt-3">
+    <% if (registered) { %>
+      <div class="alert alert-success text-center">
+        Registro exitoso. ¡Bienvenido!
+      </div>
+    <% } %>
+    <% if (welcome) { %>
+      <div class="alert alert-info text-center">
+        ¡Has iniciado sesión correctamente!
+      </div>
+    <% } %>
+    <% if (error) { %>
+      <div class="alert alert-danger text-center">
+        <% if (error === 'correo_existe') { %>
+          Este correo ya existe.
+        <% } else if (error === 'usuario') { %>
+          Usuario no encontrado.
+        <% } else if (error === 'password') { %>
+          Contraseña incorrecta.
+        <% } else { %>
+          Ocurrió un error.
+        <% } %>
+      </div>
+    <% } %>
+  </div>
+
+  <div class="pt-4"><%- body %></div>
+
+  <%- include('../partials/authModals') %>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

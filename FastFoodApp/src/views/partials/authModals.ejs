@@ -1,0 +1,44 @@
+<!-- Modal Login -->
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+  <div class="modal-dialog"><div class="modal-content">
+    <form action="/login" method="POST">
+      <div class="modal-header">
+        <h5 class="modal-title" id="loginModalLabel">Inicio de Sesión</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <label class="form-label">Correo electrónico</label>
+          <input type="email" name="email" class="form-control" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Contraseña</label>
+          <input type="password" name="password" class="form-control" required>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary w-100">Entrar</button>
+      </div>
+    </form>
+  </div></div>
+</div>
+
+<!-- Modal Registro -->
+<div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+  <div class="modal-dialog"><div class="modal-content">
+    <form action="/registro" method="POST">
+      <div class="modal-header">
+        <h5 class="modal-title" id="registerModalLabel">Registro de Cliente</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3"><label class="form-label">Nombre</label><input type="text"    name="nombre"    class="form-control" required></div>
+        <div class="mb-3"><label class="form-label">Correo electrónico</label><input type="email"   name="email"     class="form-control" required></div>
+        <div class="mb-3"><label class="form-label">Contraseña</label>      <input type="password"name="password"  class="form-control" required></div>
+        <div class="mb-3"><label class="form-label">Teléfono</label>         <input type="text"    name="telefono"   class="form-control" required></div>
+        <div class="mb-3"><label class="form-label">Dirección</label>        <input type="text"    name="direccion"  class="form-control" required></div>
+      </div>
+      <div class="modal-footer"><button type="submit" class="btn btn-success w-100">Registrarse</button></div>
+    </form>
+  </div></div>
+</div>

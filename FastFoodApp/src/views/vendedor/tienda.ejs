@@ -1,0 +1,71 @@
+<!-- src/views/vendedor/tienda.ejs -->
+<div class="container mt-4">
+  <div class="row">
+    <!-- Productos -->
+    <div class="col-lg-8">
+      <h2>Productos Disponibles</h2>
+      <div class="row gy-4">
+        <% productos.forEach(p => { %>
+          <div class="col-sm-6 col-lg-4">
+            <div class="card product-card h-100">
+              <% if (p.imagen) { %>
+                <img src="/uploads/<%= p.imagen %>" class="card-img-top" alt="<%= p.nombre %>">
+              <% } %>
+              <div class="card-body d-flex flex-column">
+                <h5 class="card-title"><%= p.nombre %></h5>
+                <p class="fw-bold mb-3">$<%= p.precio.toFixed(0) %></p>
+                <form action="/vendedor/venta/add" method="POST" class="mt-auto d-flex">
+                  <input type="hidden" name="productId" value="<%= p.id %>">
+                  <input type="number" name="cantidad" value="1" min="1"
+                         max="<%= p.stock ?? 1 %>"
+                         class="form-control form-control-sm me-2" style="width: 60px;">
+                  <button type="submit" class="btn btn-primary btn-sm">Añadir</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        <% }) %>
+      </div>
+    </div>
+
+    <!-- Caja / Carrito -->
+    <div class="col-lg-4">
+      <h2>Caja</h2>
+      <% if (!cart.length) { %>
+        <div class="alert alert-info">No hay productos en la venta.</div>
+      <% } else { %>
+        <table class="table-cart w-100 mb-3">
+          <thead>
+            <tr><th>Producto</th><th>Cant</th><th>Subtotal</th><th></th></tr>
+          </thead>
+          <tbody>
+            <% cart.forEach(item => { %>
+              <tr>
+                <td><%= item.nombre %></td>
+                <td><%= item.cantidad %></td>
+                <td>$<%= (item.precio * item.cantidad).toFixed(0) %></td>
+                <td>
+                  <form action="/vendedor/venta/remove" method="POST">
+                    <input type="hidden" name="productId" value="<%= item.id %>">
+                    <button class="btn btn-sm btn-danger">✕</button>
+                  </form>
+                </td>
+              </tr>
+            <% }) %>
+          </tbody>
+          <tfoot>
+            <tr>
+              <th colspan="2" class="text-end">Total:</th>
+              <th colspan="2">$<%= total.toFixed(0) %></th>
+            </tr>
+          </tfoot>
+        </table>
+
+        <!-- Selección de tipo de pago (solo efectivo) -->
+        <form action="/vendedor/venta/checkout" method="POST">
+          <button type="submit" class="btn btn-success w-100 mb-3">Finalizar Venta (Efectivo)</button>
+        </form>
+      <% } %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,117 @@
+/* Tipografía y fondo general */
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #fffaf0; /* fondo crema rústico */
+  color: #3d3d3d;
+  margin: 0;
+  padding: 0;
+}
+
+h1, h2, h3 {
+  font-family: 'Playfair Display', serif;
+  font-weight: bold;
+  color: #5a371b;
+}
+
+/* Contenedor principal */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Cards de producto estilo rústico */
+.product-card {
+  border: 1px solid #e0c9a6;
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+  transition: transform 0.2s ease;
+}
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+}
+.product-card .card-img-top {
+  height: 200px;
+  object-fit: cover;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+
+
+/* Imagen miniatura para la tabla de admin productos */
+.img-mini-admin {
+  height: 60px;
+  width: 60px;
+  object-fit: cover;
+  border-radius: 2px;
+}
+
+
+
+.product-card .card-body {
+  padding: 16px;
+}
+.product-card .card-title {
+  font-size: 1.4rem;
+  margin-bottom: 10px;
+}
+.product-card .card-text {
+  font-size: 1rem;
+  margin-bottom: 12px;
+}
+.product-card .btn {
+  background-color: #d9863f;
+  border-color: #b76e2e;
+}
+.product-card .btn:hover {
+  background-color: #b76e2e;
+  border-color: #a15f29;
+}
+
+/* Carrito */
+.table-cart {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+.table-cart th, .table-cart td {
+  padding: 12px;
+  border-bottom: 1px solid #e0d4c3;
+}
+.table-cart th {
+  background: #f0e6dc;
+  text-align: left;
+}
+.table-cart tfoot th {
+  background: transparent;
+  font-size: 1.2rem;
+}
+
+.btn-success {
+  background-color: #8fb339;
+  border-color: #759f2b;
+}
+.btn-success:hover {
+  background-color: #759f2b;
+  border-color: #647b24;
+}
+
+/* Botones generales */
+.btn-primary {
+  background-color: #d9863f;
+  border-color: #b76e2e;
+}
+.btn-primary:hover {
+  background-color: #b76e2e;
+  border-color: #a15f29;
+}
+
+@media (max-width: 768px) {
+  .product-card .card-img-top {
+    height: 150px;
+  }
+}
+

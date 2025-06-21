@@ -1,0 +1,55 @@
+<!-- src/views/admin/productos/list.ejs -->
+<div class="container mt-3">
+  <h2 class="h4 mb-3">Gestión de Productos</h2>
+  <a href="/admin/productos/nuevo" class="btn btn-sm btn-success mb-2">Nuevo Producto</a>
+
+  <div class="table-responsive" style="max-width: 800px; margin: 0 auto;">
+    <table class="table table-sm table-striped align-middle small" style="table-layout: fixed; width: 100%;">
+      <thead class="table-dark">
+        <tr>
+          <th style="width: 5%;">ID</th>
+          <th style="width: 20%;">Nombre</th>
+          <th style="width: 30%;">Descripción</th>
+          <th style="width: 10%;">Precio</th>
+          <th style="width: 10%;">Stock</th>
+          <th style="width: 15%;">Bebida</th>
+          <th style="width: 10%;">Imagen</th>
+          <th style="width: 15%;">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% productos.forEach(p => { %>
+          <tr>
+            <td><%= p.id %></td>
+            <td><strong><%= p.nombre %></strong></td>
+            <td class="text-truncate" style="max-width: 200px;"><%= p.descripcion || '-' %></td>
+            <td>$<%= p.precio.toFixed(2) %></td>
+            <td><%= p.stock != null ? p.stock : '-' %></td>
+            <td><%= p.bebida ? p.bebida.nombre : '-' %></td>
+            <td>
+              <% if (p.imagen) { %>
+                <img
+                src="/uploads/<%= p.imagen %>"
+                alt="<%= p.nombre %>"
+                class="img-mini-admin"
+                />
+
+
+              <% } else { %>
+                -
+              <% } %>
+            </td>
+            <td>
+              <div class="btn-group btn-group-sm" role="group">
+                <a href="/admin/productos/<%= p.id %>/editar" class="btn btn-primary">Editar</a>
+                <form action="/admin/productos/<%= p.id %>/eliminar" method="POST" onsubmit="return confirm('¿Eliminar este producto?');">
+                  <button type="submit" class="btn btn-danger">Eliminar</button>
+                </form>
+              </div>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+</div>

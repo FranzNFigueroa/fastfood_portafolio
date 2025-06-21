@@ -1,0 +1,144 @@
+<!-- src/views/admin/productos/form.ejs -->
+<div class="container mt-5">
+  <h2><%= producto.id ? 'Editar Producto' : 'Nuevo Producto' %></h2>
+  <form
+    action="<%= producto.id ? '/admin/productos/' + producto.id : '/admin/productos' %>"
+    method="POST"
+    enctype="multipart/form-data"
+    class="mt-4"
+  >
+    <!-- Nombre -->
+    <div class="mb-3">
+      <label for="nombre" class="form-label">Nombre</label>
+      <input
+        type="text"
+        id="nombre"
+        name="nombre"
+        class="form-control"
+        value="<%= producto.nombre || '' %>"
+        required
+      >
+    </div>
+
+    <!-- Descripción -->
+    <div class="mb-3">
+      <label for="descripcion" class="form-label">Descripción</label>
+      <textarea
+        id="descripcion"
+        name="descripcion"
+        class="form-control"
+        rows="3"
+      ><%= producto.descripcion || '' %></textarea>
+    </div>
+
+    <!-- Precio -->
+    <div class="mb-3">
+      <label for="precio" class="form-label">Precio</label>
+      <input
+        type="number"
+        step="0.01"
+        id="precio"
+        name="precio"
+        class="form-control"
+        value="<%= producto.precio != null ? producto.precio : '' %>"
+        required
+      >
+    </div>
+
+    <!-- Stock (solo bebidas) -->
+    <div class="mb-3">
+      <label for="stock" class="form-label">
+        Stock <small class="text-muted">(solo para bebidas)</small>
+      </label>
+      <input
+        type="number"
+        id="stock"
+        name="stock"
+        class="form-control"
+        placeholder="Ej: 50 (dejar vacío si no aplica)"
+        value="<%= producto.stock != null ? producto.stock : '' %>"
+      >
+    </div>
+
+    <!-- SECCIÓN DE BEBIDAS -->
+    <div class="mb-3">
+      <label for="bebidaSelect" class="form-label">Bebida</label>
+      <select
+        id="bebidaSelect"
+        name="bebidaSelect"
+        class="form-select"
+      >
+        <option value="">— Ninguna —</option>
+
+        <% bebidas.forEach(b => { %>
+          <option
+            value="<%= b.id %>"
+            <%= producto.bebidaId === b.id ? 'selected' : '' %>
+          ><%= b.nombre %></option>
+        <% }) %>
+
+        <option 
+          value="otro"
+          <%= (producto.bebidaId == null && producto.id && !producto.bebida) ? 'selected' : '' %>
+        >Otro...</option>
+      </select>
+    </div>
+
+    <!-- Campo dinámico: "Otra bebida" (oculto por defecto con d-none) -->
+    <div id="nuevaBebidaContainer" class="mb-3 d-none">
+      <label for="nuevaBebida" class="form-label">Nombre de la nueva bebida</label>
+      <input
+        type="text"
+        id="nuevaBebida"
+        name="nuevaBebida"
+        class="form-control"
+        placeholder="Escribe aquí la nueva bebida"
+      >
+    </div>
+
+    <!-- Campo dinámico: "Formato de Bebida" (oculto por defecto con d-none) -->
+    <div id="formatoContainer" class="mb-3 d-none">
+      <label for="formato" class="form-label">Formato de Bebida</label>
+      <select
+        id="formato"
+        name="formato"
+        class="form-select"
+      >
+        <option value="">— Selecciona Formato —</option>
+        <option value="ORIGINAL" <%= producto.formatoBebida === 'ORIGINAL' ? 'selected' : '' %>>Original</option>
+        <option value="LIGHT"    <%= producto.formatoBebida === 'LIGHT'    ? 'selected' : '' %>>Light</option>
+        <option value="ZERO"     <%= producto.formatoBebida === 'ZERO'     ? 'selected' : '' %>>Zero</option>
+      </select>
+    </div>
+    <!-- /SECCIÓN DE BEBIDAS -->
+
+    <!-- Imagen del producto -->
+    <div class="mb-3">
+      <label for="imagen" class="form-label">Imagen del Producto</label>
+      <input
+        type="file"
+        id="imagen"
+        name="imagen"
+        accept="image/*"
+        class="form-control"
+      >
+      <% if (producto.imagen) { %>
+        <!-- Mostrar miniatura de la imagen actual -->
+        <img
+          src="/uploads/<%= producto.imagen %>"
+          alt="Actual"
+          class="mt-2 img-fluid img-thumbnail"
+          style="max-width: 200px;"
+        >
+      <% } %>
+    </div>
+
+    <button type="submit" class="btn btn-primary">
+      <%= producto.id ? 'Actualizar' : 'Crear' %>
+    </button>
+    <a href="/admin/productos" class="btn btn-secondary ms-2">Cancelar</a>
+  </form>
+</div>
+
+<!-- Referencia al JS para controlar los campos dinámicos de bebida -->
+<script src="/js/adminProductos.js"></script>

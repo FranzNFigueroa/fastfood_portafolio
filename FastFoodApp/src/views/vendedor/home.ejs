@@ -1,0 +1,9 @@
+<div class="container mt-5 text-center">
+  <h1>Panel de Vendedor</h1>
+  <p>Aquí verás los pedidos nuevos y podrás gestionarlos.</p>
+  <a href="/vendedor" class="btn btn-warning">Ver Productos</a>
+  <a href="/vendedor/venta"      class="btn btn-info ms-2">Ir a Caja</a>
+  <% if (ventaSuccess) { %>
+    <div class="alert alert-success mt-4">Venta finalizada correctamente.</div>
+  <% } %>
+</div>

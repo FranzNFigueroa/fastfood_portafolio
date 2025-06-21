@@ -1,0 +1,104 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Usuario {
+  id        Int       @id @default(autoincrement())
+  nombre    String
+  correo    String    @unique(map: "Usuario_correo_key")
+  password  String
+  rol       usuario_rol
+  createdAt DateTime  @default(now())
+  direccion String
+  telefono  String
+  pedidos   Pedido[]
+  resenas   Resena[]
+}
+
+enum usuario_rol {
+  CLIENTE
+  VENDEDOR
+  ADMIN
+}
+
+/// Nuevo enum para formatos de bebida
+enum formato_bebida {
+  ORIGINAL
+  LIGHT
+  ZERO
+}
+
+model Bebida {
+  id       Int       @id @default(autoincrement())
+  nombre   String    @unique
+  productos Producto[]
+}
+
+model Producto {
+  id              Int             @id @default(autoincrement())
+  nombre          String
+  descripcion     String?
+  precio          Float
+  stock           Int?            // ahora opcional
+  imagen          String?         // ruta en public/uploads/
+  createdAt       DateTime        @default(now())
+  bebidaId        Int?            // FK opcional a Bebida
+  bebida          Bebida?         @relation(fields: [bebidaId], references: [id])
+  // Nuevo campo para el formato de bebida (solo aplica si bebidaId != null)
+  formatoBebida   formato_bebida?
+
+  detallepedido   DetallePedido[]
+  resenas         Resena[]
+}
+
+model Pedido {
+  id          Int             @id @default(autoincrement())
+  clienteId   Int
+  direccion   String?
+  telefono    String?
+  tipoEntrega pedido_tipoEntrega
+  total       Float
+  estado      pedido_estado   @default(PENDIENTE)
+  creadoEn    DateTime        @default(now())
+  detalles    DetallePedido[]
+  usuario     Usuario         @relation(fields: [clienteId], references: [id])
+}
+
+enum pedido_tipoEntrega {
+  RETIRO
+  DOMICILIO
+}
+
+enum pedido_estado {
+  PENDIENTE
+  EN_PREPARACION
+  EN_CAMINO
+  ENTREGADO
+  CANCELADO
+}
+
+model DetallePedido {
+  id         Int      @id @default(autoincrement())
+  pedidoId   Int
+  productoId Int
+  cantidad   Int
+  subtotal   Float
+  pedido     Pedido   @relation(fields: [pedidoId], references: [id])
+  producto   Producto @relation(fields: [productoId], references: [id])
+}
+
+model Resena {
+  id           Int      @id @default(autoincrement())
+  contenido    String
+  calificacion Int      // 1 a 5 estrellas
+  creadoEn     DateTime @default(now())
+  productoId   Int
+  usuarioId    Int
+  producto     Producto @relation(fields: [productoId], references: [id])
+  usuario      Usuario  @relation(fields: [usuarioId], references: [id])
+}
