@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Redirigiendo a pago...</title>
+</head>
+<body>
+  <form action="<%= transbank.url %>" name="send_pay_form" method="POST">
+    <input type="hidden" name="token_ws" value="<%= transbank.token %>">
+  </form>
+  <p class="text-center mt-5">Redirigiendo a la plataforma de pago...</p>
+
+  <!-- Script externo permitido por CSP -->
+  <script src="/js/autoRedirect.js" defer></script>
+</body>
+</html>
+

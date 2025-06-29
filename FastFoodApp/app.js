@@ -21,7 +21,8 @@ app.use(helmet({
       imgSrc:     ["'self'", "data:"],
       connectSrc: ["'self'"],
       fontSrc:    ["'self'", "https://cdn.jsdelivr.net"],
-      objectSrc:  ["'none'"]
+      objectSrc:  ["'none'"],
+      formAction: ["'self'", "https://webpay3gint.transbank.cl"], // Permite enviar formularios a Transbank
     }
   }
 }));
@@ -60,32 +61,40 @@ app.use(ejsLayouts);
 app.set('views', path.join(__dirname, 'src', 'views'));
 app.set('layout', 'layouts/cliente');
 
-// 7. Rutas
-const authRoutes         = require('./src/routes/authRoutes');
-const carritoRoutes      = require('./src/routes/carritoRoutes');
-const vendorRoutes       = require('./src/routes/vendorRoutes');
-const adminRoutes        = require('./src/routes/adminRoutes');
-const adminProductRoutes = require('./src/routes/adminProductRoutes');
+// 7. Rutas –– Importar antes de montar
+const authRoutes             = require('./src/routes/authRoutes');
+const carritoRoutes          = require('./src/routes/carritoRoutes');
+const vendorRoutes           = require('./src/routes/vendorRoutes');
+const adminProductRoutes     = require('./src/routes/adminProductRoutes');
+const adminRoutes            = require('./src/routes/adminRoutes');
+const pagoClienteRoutes      = require('./src/routes/transbankpay');
+const pagoVendedorRoutes     = require('./src/routes/vendorTransbank');
 
+// 8. Montaje de rutas
 app.use('/', authRoutes);
-// Unificamos catálogo y carrito en la misma vista:
+// Catálogo + carrito (cliente)
 app.use(['/productos', '/carrito'], carritoRoutes);
+// Funcionalidades de vendedor (login, agregar, eliminar en efectivo)
 app.use('/vendedor', vendorRoutes);
+// Dashboard admin y manejo de productos
 app.use('/admin/productos', adminProductRoutes);
 app.use('/admin', adminRoutes);
+// Flujos de pago con tarjeta
+app.use('/', pagoClienteRoutes);      // cliente
+app.use('/', pagoVendedorRoutes);     // vendedor
 
-// 8. Página 404
+// 9. Página 404
 app.use((req, res, next) => {
   res.status(404).render('404', { layout: false, url: req.originalUrl });
 });
 
-// 9. Manejo de errores generales
+// 10. Manejo de errores generales
 app.use((err, req, res, next) => {
   console.error('❌ Error general:', err.stack);
   res.status(500).render('500', { layout: false, error: err });
 });
 
-// 10. Iniciar servidor
+// 11. Iniciar servidor
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`🚀 Servidor en http://localhost:${PORT}`);

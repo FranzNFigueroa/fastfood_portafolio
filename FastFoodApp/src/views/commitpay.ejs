@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Resultado de Pago</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+  <div class="container mt-5">
+    <% if (!transaction_detail) { %>
+      <div class="alert alert-danger text-center">
+        No se pudo obtener información de la transacción.
+      </div>
+      <div class="text-center mt-4">
+        <a href="/productos" class="btn btn-secondary">← Volver al Menú</a>
+      </div>
+    <% } else { %>
+      <div class="card shadow">
+        <div class="card-header bg-success text-white">
+          <h2 class="mb-0">Estado de Pago: <strong><%= transaction_detail.state %></strong></h2>
+        </div>
+        <div class="card-body">
+          <h3 class="mb-3">Productos Comprados</h3>
+          <% if (order && order.length) { %>
+            <ul class="list-group mb-4">
+              <% order.forEach(item => { %>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  <span><%= item.nombre %> x<%= item.cantidad %></span>
+                  <span>$<%= item.subtotal.toFixed(0) %></span>
+                </li>
+              <% }) %>
+            </ul>
+          <% } else { %>
+            <div class="alert alert-info">No se encontró detalle de la orden.</div>
+          <% } %>
+
+          <table class="table table-bordered mx-auto" style="max-width: 650px;">
+            <tbody>
+              <tr><th>Fecha:</th><td><%= transaction_detail.transaction_date %></td></tr>
+              <tr><th>Tipo de Pago:</th><td><%= transaction_detail.pay_type %></td></tr>
+              <tr><th>Monto Pagado:</th><td>$<%= transaction_detail.amount %></td></tr>
+              <tr><th>N° Tarjeta:</th><td>XXXX XXXX XXXX <%= transaction_detail.card_number %></td></tr>
+              <tr><th>Autorización:</th><td><%= transaction_detail.authorization_code %></td></tr>
+              <tr><th>N° Orden:</th><td><%= transaction_detail.buy_order %></td></tr>
+            </tbody>
+          </table>
+
+          <div class="text-center mt-4">
+            <a href="/productos" class="btn btn-outline-primary">← Volver al Menú</a>
+          </div>
+        </div>
+      </div>
+    <% } %>
+  </div>
+
+  <!-- Bootstrap JS (opcional) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

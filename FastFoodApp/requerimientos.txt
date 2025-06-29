@@ -4,23 +4,14 @@ admin@fastfood.cl
 
 Cliente
 fran.figueroaj@duocuc.cl
-Perro1234
-
-
-
-
-
-https://www.mercadopago.cl/developers/es/docs#online-payments
+Duoc1234
 
 Vendedor
 vendedor@fastfood.cl
 Duoc1234
 
-pay pal, registrarse, facilitan ambiente de prueba 
-otra forma sdk entorno de desarrollo .
 
-crear dashboard para admin
-ventas en efectivo y con tarjeta para cuadratura de caja 
+ventas(cuadratura de caja)
 ideas
 y ventas mensuales y semanales 
 mensaje al coreo para cliente que la compra esta exitosa con detalle y valor 
@@ -35,3 +26,10 @@ se puede dividir en dos grupos
 
 sabado 5 de julio presentacion 
 sabado 28 3ra entrega
+
+
+REDCOMPRA: 4051 8842 3993 7763
+
+Rut: 11.111.111-1
+
+Clave: 123
